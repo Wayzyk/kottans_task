@@ -30,16 +30,16 @@ class MessagesController < ApplicationController
       end
 
       if @message.encryption_type == "Destroy message after the first link visit"
-        if @message.visit_count > @message.destruct_number
+        if @message.is_visited == true
           @message.destroy
           redirect_to root_path
           flash[:warning] = "Сообщение было удалено"
         else
-          @message.visit_count = @message.visit_count + 1
+          @message.is_visited = true
           @message.save
         end
       else
-        unless @message.created_at + @message.destruct_number > Time.now
+        unless @message.created_at + 1.hour > Time.now
           redirect_to root_path
         end
       end
@@ -56,6 +56,6 @@ class MessagesController < ApplicationController
 private
 
   def message_params
-    params.require(:message).permit(:text, :encryption_type, :secret_code_iput, :destruct_number)
+    params.require(:message).permit(:text, :encryption_type, :secret_code_input)
   end
 end
