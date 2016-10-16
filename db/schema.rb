@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20161014173256) do
     t.string   "text"
     t.string   "encryption_type"
     t.string   "link"
+    t.boolean  "is_visited"
+    t.string   "secret_code"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end

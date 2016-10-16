@@ -10,5 +10,8 @@
 
   <body>
     <%= yield %>
+    <% flash.each do |key, value| %>
+      <h1><div class="alert alert-<%= key %>"><%= value %></div></h1>
+      <% end %>
   </body>
 </html>
