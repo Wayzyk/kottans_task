@@ -4,8 +4,9 @@ class CreateMessages < ActiveRecord::Migration[5.0]
       t.string :text
       t.string :encryption_type
       t.string :link
-      t.boolean :is_visited
+      t.integer :visit_count, default: 0
       t.string :secret_code
+      t.integer :destruct_number, default: 1
       t.timestamps
     end
   end
