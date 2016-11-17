@@ -6,7 +6,7 @@ class Message < ApplicationRecord
 
   def generate_link
     self.link = loop do
-      random_link = SecureRandom.urlsafe_base64(10)
+      random_link = SecureRandom.urlsafe_base64(10) #to do: make dependency to SecureRandom configurable
       break random_link unless Message.exists?(link: random_link)
     end
   end

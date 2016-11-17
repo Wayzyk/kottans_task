@@ -4,10 +4,12 @@ class MessagesController < ApplicationController
   end
 
   def create
+    # start: Move to some service which can create secure message
     @message = Message.create(message_params)
     @message.text = AESCrypt.encrypt(params[:message][:text], params[:message][:secret_code])
     @message.secret_code = params[:message][:secret_code]
     @message.save
+    # end: Move to some service which can create secure message
 
     if @message.errors.empty?
       redirect_to link_message_path(@message.link)
@@ -17,6 +19,7 @@ class MessagesController < ApplicationController
   end
 
   def show
+    # too many if conditions, move the logix to separated method or other Class
     @message = Message.find_by(link: params[:id])
 
     if params[:secret_code_input].nil?
@@ -39,7 +42,7 @@ class MessagesController < ApplicationController
           @message.save
         end
       else
-        unless @message.created_at + 1.hour > Time.now
+        unless @message.created_at + 1.hour > Time.now # move to message instance method
           redirect_to root_path
         end
       end
